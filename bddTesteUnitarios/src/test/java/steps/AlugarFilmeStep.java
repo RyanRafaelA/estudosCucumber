@@ -3,7 +3,6 @@ package steps;
 import entidades.Filme;
 import entidades.NotaAluguel;
 import entidades.service.AluguelService;
-import io.cucumber.java.ca.Cal;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -17,6 +16,7 @@ public class AlugarFilmeStep {
     private Filme filme;
     private AluguelService aluguel = new AluguelService();
     private NotaAluguel nota;
+    private String erro;
 
     @Dado("um filme com estoque de {int} unidades")
     public void umFilmeComEstoqueDeUnidades(Integer quant) {
@@ -30,9 +30,12 @@ public class AlugarFilmeStep {
     }
 
     @Quando("alugar")
-    public void alugar() {
-        nota = aluguel.alugar(filme);
-        System.out.println(nota.getPreco());
+    public void alugar() throws Throwable{
+        try {
+            nota = aluguel.alugar(filme);
+        } catch(RuntimeException e){
+            erro = e.getMessage();
+        }
     }
 
     @Então("o preço do aluguel será R$ {int}")
@@ -57,5 +60,10 @@ public class AlugarFilmeStep {
     @Então("o estoque do filme será {int} unidade")
     public void oEstoqueDoFilmeSeráUnidade(Integer estoqueEsperado) {
         Assert.assertEquals(estoqueEsperado.intValue(), filme.getEstoque());
+    }
+
+    @Então("não será possível por falta de estoque")
+    public void nãoSeráPossívelPorFaltaDeEstoque() {
+        Assert.assertEquals("Filme sem estoque", erro);
     }
 }
