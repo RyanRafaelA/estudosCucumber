@@ -7,7 +7,10 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import org.junit.Assert;
+import utils.DateUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,6 +20,7 @@ public class AlugarFilmeStep {
     private AluguelService aluguel = new AluguelService();
     private NotaAluguel nota;
     private String erro;
+    private String tipoAluguel;
 
     @Dado("um filme com estoque de {int} unidades")
     public void umFilmeComEstoqueDeUnidades(Integer quant) {
@@ -32,7 +36,7 @@ public class AlugarFilmeStep {
     @Quando("alugar")
     public void alugar() throws Throwable{
         try {
-            nota = aluguel.alugar(filme);
+            nota = aluguel.alugar(filme, tipoAluguel);
         } catch(RuntimeException e){
             erro = e.getMessage();
         }
@@ -65,5 +69,25 @@ public class AlugarFilmeStep {
     @Então("não será possível por falta de estoque")
     public void nãoSeráPossívelPorFaltaDeEstoque() {
         Assert.assertEquals("Filme sem estoque", erro);
+    }
+
+    @Dado("que o tipo de aluguel seja {string}")
+    public void queOTipoDeAluguelSeja(String tipo) {
+        tipoAluguel = tipo;
+    }
+
+    @Então("a data de entrega será em {int} dias")
+    public void aDataDeEntregaSeráEmDias(Integer int1) {
+        Date dataEsperada = DateUtil.ObterDataDiferencaDias(3);
+        Date dataReal = nota.getDataEntrega();
+
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        Assert.assertEquals(format.format(dataEsperada), format.format(dataReal));
+    }
+
+    @Então("a pontuação recebida será de {int} pontos")
+    public void aPontuaçãoRecebidaSeráDePontos(Integer int1) {
+        Assert.assertEquals(int1.intValue(), nota.getPontuacao());
     }
 }
