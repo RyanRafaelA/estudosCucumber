@@ -2,6 +2,7 @@ package steps;
 
 import entidades.Filme;
 import entidades.NotaAluguel;
+import entidades.TipoAluguel;
 import entidades.service.AluguelService;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
@@ -20,7 +21,7 @@ public class AlugarFilmeStep {
     private AluguelService aluguel = new AluguelService();
     private NotaAluguel nota;
     private String erro;
-    private String tipoAluguel;
+    private TipoAluguel tipoAluguel = TipoAluguel.COMUM;
 
     @Dado("um filme com estoque de {int} unidades")
     public void umFilmeComEstoqueDeUnidades(Integer quant) {
@@ -73,12 +74,18 @@ public class AlugarFilmeStep {
 
     @Dado("que o tipo de aluguel seja {string}")
     public void queOTipoDeAluguelSeja(String tipo) {
-        tipoAluguel = tipo;
+        if(tipo.equals("semanal")){
+            tipoAluguel = TipoAluguel.SEMANAL;
+        } else if(tipo.equals("extendido")){
+            tipoAluguel = TipoAluguel.EXTENDIDO;
+        } else {
+            tipoAluguel = TipoAluguel.COMUM;
+        }
     }
 
     @Então("a data de entrega será em {int} dias")
     public void aDataDeEntregaSeráEmDias(Integer int1) {
-        Date dataEsperada = DateUtil.ObterDataDiferencaDias(3);
+        Date dataEsperada = DateUtil.obterDataDiferencaDias(int1);
         Date dataReal = nota.getDataEntrega();
 
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");

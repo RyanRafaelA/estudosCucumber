@@ -2,26 +2,35 @@ package entidades.service;
 
 import entidades.Filme;
 import entidades.NotaAluguel;
+import entidades.TipoAluguel;
 import utils.DateUtil;
 
 import java.util.Calendar;
 
 public class AluguelService {
 
-    public NotaAluguel alugar(Filme filme, String tipo){
+    public NotaAluguel alugar(Filme filme, TipoAluguel tipo){
         if(filme.getEstoque() == 0) {
             throw new RuntimeException("Filme sem estoque");
         }
 
         NotaAluguel nota = new NotaAluguel();
-        if("extendido".equals(tipo)) {
-            nota.setPreco(filme.getPreco() * 2);
-            nota.setDataEntrega(DateUtil.ObterDataDiferencaDias(3));
-            nota.setPontuacao(2);
-        } else {
-            nota.setPreco(filme.getPreco());
-            nota.setDataEntrega(DateUtil.ObterDataDiferencaDias(1));
-            nota.setPontuacao(1);
+        switch (tipo){
+            case COMUM:
+                nota.setPreco(filme.getPreco());
+                nota.setDataEntrega(DateUtil.obterDataDiferencaDias(1));
+                nota.setPontuacao(1);
+                break;
+            case EXTENDIDO:
+                nota.setPreco(filme.getPreco() * 2);
+                nota.setDataEntrega(DateUtil.obterDataDiferencaDias(3));
+                nota.setPontuacao(2);
+                break;
+            case SEMANAL:
+                nota.setPreco(filme.getPreco() * 3);
+                nota.setDataEntrega(DateUtil.obterDataDiferencaDias(7));
+                nota.setPontuacao(3);
+                break;
         }
         filme.setEstoque(filme.getEstoque() - 1);
 
