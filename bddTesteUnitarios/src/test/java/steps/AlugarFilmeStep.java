@@ -4,6 +4,7 @@ import entidades.Filme;
 import entidades.NotaAluguel;
 import entidades.TipoAluguel;
 import entidades.service.AluguelService;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -14,6 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 public class AlugarFilmeStep {
 
@@ -21,7 +23,7 @@ public class AlugarFilmeStep {
     private AluguelService aluguel = new AluguelService();
     private NotaAluguel nota;
     private String erro;
-    private TipoAluguel tipoAluguel = TipoAluguel.COMUM;
+    private TipoAluguel tipoAluguel;
 
     @Dado("um filme com estoque de {int} unidades")
     public void umFilmeComEstoqueDeUnidades(Integer quant) {
@@ -32,6 +34,24 @@ public class AlugarFilmeStep {
     @Dado("que o preço do aluguel seja R$ {int}")
     public void queOPreçoDoAluguelSejaR$(Integer preco) {
         filme.setPreco(preco);
+    }
+
+    @Dado("um filme")
+    public void umFilme(DataTable dataTable) {
+        filme = new Filme();
+        Map<String, String> map = dataTable.asMap(String.class, String.class);
+        String tipo = map.get("tipo");
+
+        filme.setEstoque(Integer.parseInt(map.get("estoque")));
+        filme.setPreco(Integer.parseInt(map.get("preco")));
+
+        if(tipo.equals("semanal")){
+            tipoAluguel = TipoAluguel.SEMANAL;
+        } else if(tipo.equals("extendido")){
+            tipoAluguel = TipoAluguel.EXTENDIDO;
+        } else {
+            tipoAluguel = TipoAluguel.COMUM;
+        }
     }
 
     @Quando("alugar")
