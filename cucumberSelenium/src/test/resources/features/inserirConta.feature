@@ -18,6 +18,7 @@ Cenario: Deve inserir uma conta com sucesso
   E seleciono Salvar
   Então a conta é inserida com sucesso
 
+@rodar
 Cenario: Não deve inserir uma conta sem nome
   Dado que estou acessando a aplicação
   Quando informo o usuário "seil@09"

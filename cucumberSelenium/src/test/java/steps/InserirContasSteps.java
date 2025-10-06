@@ -1,5 +1,7 @@
 package steps;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Quando;
 import io.cucumber.java.pt.Então;
@@ -118,5 +120,16 @@ public class InserirContasSteps {
                 By.xpath("//div[contains(@class, 'alert-danger')]")
         )).getText();
         Assert.assertEquals("Já existe uma conta com esse nome!", texto);
+    }
+
+    @Before
+    public void inicio(){
+        System.out.println("Começando aqui");
+    }
+
+    @After
+    public void fecharBrowser(){
+        driver.quit();
+        System.out.println("Terminando");
     }
 }
