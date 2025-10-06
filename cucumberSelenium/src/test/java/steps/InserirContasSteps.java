@@ -91,8 +91,7 @@ public class InserirContasSteps {
     @Quando("seleciono Salvar")
     public void selecionoSalvar() {
         WebElement salvarButton = wait.until(ExpectedConditions.elementToBeClickable(
-                        By.tagName("button")
-                ));
+                        By.tagName("button")));
         salvarButton.click();
     }
 
@@ -111,5 +110,13 @@ public class InserirContasSteps {
                 By.xpath("//div[contains(@class, 'alert-danger')]")
         )).getText();
         Assert.assertEquals("Informe o nome da conta", texto);
+    }
+
+    @Então("sou notificado que já existe uma conta com esse nome")
+    public void souNotificadoQueJáExisteUmaContaComEsseNome() {
+        String texto = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[contains(@class, 'alert-danger')]")
+        )).getText();
+        Assert.assertEquals("Já existe uma conta com esse nome!", texto);
     }
 }
