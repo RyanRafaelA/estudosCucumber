@@ -18,7 +18,6 @@ Cenario: Deve inserir uma conta com sucesso
   E seleciono Salvar
   Então a conta é inserida com sucesso
 
-@rodar
 Cenario: Não deve inserir uma conta sem nome
   Dado que estou acessando a aplicação
   Quando informo o usuário "seil@09"
@@ -30,7 +29,6 @@ Cenario: Não deve inserir uma conta sem nome
   E seleciono Salvar
   Então sou notificado que o nome da conta é obrigatório
 
-@rodar
 Cenario: Não deve inserir uma conta com nome já existente
   Dado que estou acessando a aplicação
   Quando informo o usuário "seil@09"
@@ -39,6 +37,6 @@ Cenario: Não deve inserir uma conta com nome já existente
   Então visualizo a página inicial
   Quando seleciono Contas
   E seleciono Adicionar
-  E informo a conta "Contas de Sei La"
+  E informo a conta "Conta mesmo nome"
   E seleciono Salvar
   Então sou notificado que já existe uma conta com esse nome
