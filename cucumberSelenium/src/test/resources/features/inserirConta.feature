@@ -15,16 +15,13 @@ Contexto:
   Quando seleciono Contas
   E seleciono Adicionar
 
-Cenario: Deve inserir uma conta com sucesso
-  E informo a conta "Contas de Sei La"
+Esquema do Cenario: Deve validar cadastro contas
+  Quando informo a conta "<conta>"
   E seleciono Salvar
-  Então a conta é inserida com sucesso
+  Então recebo a mensagem "<mensagem>"
 
-Cenario: Não deve inserir uma conta sem nome
-  E seleciono Salvar
-  Então sou notificado que o nome da conta é obrigatório
-
-Cenario: Não deve inserir uma conta com nome já existente
-  E informo a conta "Conta mesmo nome"
-  E seleciono Salvar
-  Então sou notificado que já existe uma conta com esse nome
+  Exemplos:
+    | conta            | mensagem                           |
+    | Conta de Sei La  | Conta adicionada com sucesso!      |
+    |                  | Informe o nome da conta            |
+    | Conta mesmo nome | Já existe uma conta com esse nome! |

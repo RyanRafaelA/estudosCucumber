@@ -122,6 +122,13 @@ public class InserirContasSteps {
         Assert.assertEquals("Já existe uma conta com esse nome!", texto);
     }
 
+    @Então("recebo a mensagem {string}")
+    public void receboAMensagem(String textoEsperado) {
+        String texto = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[starts-with(@class, 'alert alert-')]"))).getText();
+        Assert.assertEquals(textoEsperado, texto);
+    }
+
     @Before
     public void inicio(){
         System.out.println("Começando aqui");
