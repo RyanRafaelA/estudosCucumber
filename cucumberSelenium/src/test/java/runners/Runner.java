@@ -53,5 +53,7 @@ public class Runner {
 
         WebElement resete = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("reset")));
         resete.click();
+
+        driver.quit();
     }
 }
