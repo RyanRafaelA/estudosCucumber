@@ -1,15 +1,17 @@
 
-# Fundamentos do Cucumber
+# BDD Teste Unitarios
 
-Esse repositório tem o objetivo de começar a utilização do Cucumber.
+Esse repositório tem o objetivo integrar o JUnit a framework Cucumber.
 
 ## Sobre o Projeto
-Este projeto contém exemplos práticos para aprender os fundamentos do Cucumber em Java, incluindo:
-- Configuração inicial do Cucumber com Java
+Este projeto contém exemplos práticos para aprender a utilizar o JUnit com Cucumber em Java, incluindo:
+- Configuração inicial do Cucumber com Jaava
 - Escrita de features em Gherkin
+- Configuração do Runner do projeto
 - Implementação de step em Java
-- Manipulação de datas e cálculos
-- Teste de lógica básica
+- Implementação das classes de entidades: Filme, NotaAluguel, TipoAluguel
+- Implementação da classe serviço: AluguelService
+- Implementação da classe util: DateUtil
 
 ## Dependências
 ### Cucumber
@@ -34,3 +36,4 @@ Este projeto contém exemplos práticos para aprender os fundamentos do Cucumber
     <scope>test</scope>
 </dependency>
 ```
+
